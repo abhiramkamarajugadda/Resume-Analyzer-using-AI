@@ -82,6 +82,9 @@ GitHub: https://github.com/Haaseth-Abhiram
 Nagasasank Palepu\
 GitHub: https://github.com/nagasasankpalepu
 
+Shaik Ahmed Ali\
+GitHub: https://github.com/nagasasankpalepu
+
 ------------------------------------------------------------------------
 
 ## License
