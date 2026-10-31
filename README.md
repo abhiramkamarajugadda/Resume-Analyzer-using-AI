@@ -1,92 +1,74 @@
 # AI Resume Analyzer
 
-An AI-powered Resume Analyzer that evaluates resumes using Artificial
-Intelligence and Natural Language Processing (NLP). The system extracts
-key information such as skills, education, and experience, and provides
-intelligent feedback and scoring to improve resume quality.
-
-------------------------------------------------------------------------
+A full-stack web app that scores a resume and returns strengths, weaknesses and targeted suggestions, using a Next.js frontend, a FastAPI backend and Google Gemini.
 
 ## Features
 
--   Upload resume (PDF/DOCX)
--   Extract resume content automatically
--   Analyze skills, education, and experience
--   Provide AI-based feedback and suggestions
--   Resume scoring system
--   FastAPI backend for fast processing
--   React.js frontend for interactive UI
-
-------------------------------------------------------------------------
+- Email and password sign-up and login, plus Google sign-in (Firebase Authentication)
+- Upload a PDF or DOCX resume (5 MB limit), with an optional target job title and industry
+- Text extraction on the backend with PyPDF2 (PDF) and python-docx (DOCX)
+- Gemini (`gemini-2.0-flash`) analysis returning a score from 1 to 100, an overall analysis, strengths, weaknesses and suggestions with examples
+- Uploaded files stored in Firebase Storage and analysis results saved to Cloud Firestore
+- Dashboard with analysis history and a progress page with charts (Recharts)
+- Settings page
 
 ## Tech Stack
 
-Frontend: - React.js - HTML - CSS - JavaScript
+| Layer | Technology |
+|---|---|
+| Frontend | Next.js 13 (App Router), React 18, TypeScript, Tailwind CSS, shadcn/ui (Radix UI), Recharts |
+| Auth and data | Firebase Authentication, Cloud Firestore, Firebase Storage |
+| Backend | Python, FastAPI, Uvicorn, Pydantic |
+| AI and parsing | Google Gemini (`google-genai`), PyPDF2, python-docx |
 
-Backend: - Python - FastAPI
+## Project Structure
 
-Database: - MongoDB
+```text
+app/                  Next.js pages: landing, login, signup, dashboard (analyze, progress, settings)
+components/ui/        shadcn/ui components
+lib/firebase.ts       Firebase app, auth helpers
+lib/resumeService.js  Calls the API, uploads to Storage, reads and writes Firestore
+backend/main.py       FastAPI service
+```
 
-AI / Processing: - Natural Language Processing (NLP)
+## API
 
-Version Control: - Git - GitHub
+| Method | Endpoint | Description |
+|---|---|---|
+| POST | `/analyze-resume` | Multipart form: `file`, optional `job_title`, `industry`. Returns `score`, `analysis`, `strengths`, `weaknesses`, `suggestions` |
+| GET | `/health` | Health check |
 
-------------------------------------------------------------------------
+## Getting Started
 
-## Installation and Setup
+**Backend**
 
-### Clone the repository
+```bash
+cd backend
+pip install fastapi uvicorn pydantic python-multipart google-genai PyPDF2 python-docx
+export GEMINI_API_KEY=your_key_here
+python main.py        # or: uvicorn main:app --reload
+```
 
-git clone
-https://github.com/Haaseth-Abhiram/Resume-Analyzer-using-AI.git
+The API runs at `http://127.0.0.1:8000`.
 
+**Frontend** (from the repository root)
 
-To Download modules 
-https://drive.google.com/file/d/1_Mtd01268DtqC-iQE1MjyRRctHIr40SY/view?usp=sharing
+```bash
+npm install
+npm run dev
+```
 
-### Backend Setup (Anaconda Prompt)
+Open `http://localhost:3000`. Set `NEXT_PUBLIC_API_URL` if the backend is not on `http://localhost:8000`, and use your own Firebase project settings in `lib/firebase.ts`.
 
-cd backend\
-conda activate base\
-python main.py
+## Team
 
-OR
+Built as a team project by:
 
-uvicorn main:app --reload
+- Abhiram Kamarajugadda ([abhiramkamarajugadda](https://github.com/abhiramkamarajugadda))
+- Nagasasank Palepu ([nagasasankpalepu](https://github.com/nagasasankpalepu))
+- Shaik Ahmed Ali ([shaikahmed-ali](https://github.com/shaikahmed-ali))
 
-Backend runs at: http://127.0.0.1:8000
+## Author
 
-### Frontend Setup
-
-cd frontend\
-npm install\
-npm start
-
-------------------------------------------------------------------------
-
-## How It Works
-
-1.  User uploads resume
-2.  Backend extracts text from resume
-3.  AI analyzes resume content
-4.  System provides score and suggestions
-5.  Results displayed on frontend
-
-------------------------------------------------------------------------
-
-## Team Members
-
-Haaseth Abhiram\
-GitHub: https://github.com/Haaseth-Abhiram
-
-Nagasasank Palepu\
-GitHub: https://github.com/nagasasankpalepu
-
-Shaik Ahmed Ali\
-GitHub: https://github.com/shaikahmed-ali
-
-------------------------------------------------------------------------
-
-## License
-
-This project is for educational purposes.
+**Abhiram Kamarajugadda**
+GitHub: [abhiramkamarajugadda](https://github.com/abhiramkamarajugadda) | Portfolio: [abhiramkamarajugadda.github.io](https://abhiramkamarajugadda.github.io)
