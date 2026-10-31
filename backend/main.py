@@ -23,7 +23,9 @@ app.add_middleware(
 )
 
 # Configure Gemini API
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY", "***REMOVED***")
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+if not GEMINI_API_KEY:
+    raise RuntimeError("Set the GEMINI_API_KEY environment variable (see .env.example).")
 genai_client = genai.Client(api_key=GEMINI_API_KEY)
 MODEL_NAME = "gemini-2.0-flash"
 

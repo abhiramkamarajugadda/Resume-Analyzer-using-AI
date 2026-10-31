@@ -45,7 +45,7 @@ backend/main.py       FastAPI service
 ```bash
 cd backend
 pip install fastapi uvicorn pydantic python-multipart google-genai PyPDF2 python-docx
-export GEMINI_API_KEY=your_key_here
+export GEMINI_API_KEY=your_key_here   # required; the API will not start without it
 python main.py        # or: uvicorn main:app --reload
 ```
 
@@ -58,7 +58,15 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:3000`. Set `NEXT_PUBLIC_API_URL` if the backend is not on `http://localhost:8000`, and use your own Firebase project settings in `lib/firebase.ts`.
+Before `npm run dev`, copy `.env.example` to `.env.local` and fill in your own Firebase web app settings:
+
+| Variable | Used by |
+|---|---|
+| `NEXT_PUBLIC_FIREBASE_API_KEY`, `NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN`, `NEXT_PUBLIC_FIREBASE_PROJECT_ID`, `NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET`, `NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID`, `NEXT_PUBLIC_FIREBASE_APP_ID` | Frontend (`lib/firebase.ts`) |
+| `NEXT_PUBLIC_API_URL` (optional) | Frontend, if the backend is not on `http://localhost:8000` |
+| `GEMINI_API_KEY` | Backend (`backend/main.py`) |
+
+Open `http://localhost:3000`. Never commit `.env` or `.env.local`; both are in `.gitignore`.
 
 ## Team
 
